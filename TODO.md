@@ -14,3 +14,6 @@
 
 * Configurable automated refresh period
   - configurable notifications (just a badge with number of new items)
+
+* Find a reliable way to work with CORS that is not a browser addon
+  - Needs to work with Fetch API
