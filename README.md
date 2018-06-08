@@ -7,9 +7,9 @@ No accounts, no social media integration... or really much of anything.
 ---
 ### How To ###
 
-Clone repo to you machine
+1. Clone repo to you machine
 
-Open index.html in your browser
+2. Open index.html in your browser
 
 NOTE: To add or remove sites from the RSS reader, you can edit the feedURLs.json file in this project. All you need to supply is a URL with the title feedURL like so:
 
@@ -18,6 +18,8 @@ NOTE: To add or remove sites from the RSS reader, you can edit the feedURLs.json
   "feedUrl": "https://javascriptweekly.com/rss"
 }
 ```
+
+NOTE: For the time being (until I can come up with a better solution), I am using [CORS-Anywhere](https://addons.mozilla.org/en-US/firefox/addon/cors-everywhere/) on Firefox to get around CORS restrictions. This is not ideal for anything besides development use and will be changed in the future.
 
 ---
 
