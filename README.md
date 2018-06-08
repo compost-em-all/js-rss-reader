@@ -5,6 +5,21 @@ A simple, barebones RSS reader written in ES6 JavaScript.
 No accounts, no social media integration... or really much of anything.
 
 ---
+### How To ###
+
+Clone repo to you machine
+
+Open index.html in your browser
+
+NOTE: To add or remove sites from the RSS reader, you can edit the feedURLs.json file in this project. All you need to supply is a URL with the title feedURL like so:
+
+``` JSON
+{
+  "feedUrl": "https://javascriptweekly.com/rss"
+}
+```
+
+---
 
 In an effort to learn more about JS, especially ES6, I wanted to create something I can use - I end up more invested in building things for either myself or others vs foo bar baz tutorials.
 

@@ -1,4 +1,4 @@
-### :clipboard: Todo / Ideas ###
+### Todo / Ideas ###
 
 * Basic CRUD functionality vs having to manually edit a JSON file
   - checking inputs to make sure they are valid
