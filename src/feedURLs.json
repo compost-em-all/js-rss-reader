@@ -1,0 +1,11 @@
+[
+  {
+    "feedUrl": "https://javascriptweekly.com/rss"
+  },
+  {
+    "feedUrl": "https://theintercept.com/feed/?lang=en"
+  },
+  {
+    "feedUrl" : "https://feeds.feedburner.com/arstechnica/features"
+  }
+]
