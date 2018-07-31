@@ -27,17 +27,21 @@ function parseFieldsFromXml(xmlDoc) {
 
   const feedTitle = doc.querySelector("channel title").textContent;
 
-  const items = doc.querySelectorAll("item").forEach(item => {
+  doc.querySelectorAll("item").forEach(item => {
     const itemTitle = item.querySelector("title").textContent;
     const itemDesc = item.querySelector("description").textContent;
     const itemLink = item.querySelector("link").textContent;
 
-    feedItems.push({
-      feedTitle: feedTitle,
-      itemTitle: itemTitle,
-      itemLink: itemLink,
-      itemDescr: itemDesc
-    });
+    const doesItemExist = feedItems.findIndex(el => el.itemLink == itemLink);
+
+    if (doesItemExist == -1) {
+      feedItems.push({
+        feedTitle: feedTitle,
+        itemTitle: itemTitle,
+        itemLink: itemLink,
+        itemDescr: itemDesc
+      });
+    }
   });
 
   renderHTML(feedItems);
@@ -101,13 +105,11 @@ function fetchXmlForFeeds(resourceJSON) {
   });
 }
 
-function fetchFeedFile(jsonFile) {
-  fetch(jsonFile)
+function fetchFeedFile() {
+  fetch(feedFile)
     .then(validateResponse)
     .then(readResponseAsText)
     .then(fetchXmlForFeeds)
     .then(logResult)
     .catch(logError);
 }
-
-fetchFeedFile(feedFile);
