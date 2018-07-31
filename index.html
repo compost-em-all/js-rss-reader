@@ -5,10 +5,15 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>RSS Reader</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  
   <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
   
 </head>
-<body class="feed">
+<body>
+  <div class="feed">
+    <p>Please click Refresh to fetch feeds</p>
+  </div>
+  <button id="refreshBtn" onclick="fetchFeedFile(feedFile)">Refresh feeds</button>
 
   <script src="src/index.js"></script>
 </body>
