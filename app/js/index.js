@@ -1,6 +1,7 @@
 const feedItems = [];
+const feedURLs = [];
 const feedElement = document.querySelector(".feed");
-const feedFile = "src/feedURLs.json";
+const feedFile = "app/feeds.json";
 
 function logResult(res) {
   return res;
@@ -21,17 +22,19 @@ function readResponseAsText(res) {
   return res.text();
 }
 
+function readResponseAsJson(res) {
+  return res.json();
+}
+
 function parseFieldsFromXml(xmlDoc) {
   const parser = new DOMParser();
   const doc = parser.parseFromString(xmlDoc, "text/xml");
-
   const feedTitle = doc.querySelector("channel title").textContent;
 
   doc.querySelectorAll("item").forEach(item => {
     const itemTitle = item.querySelector("title").textContent;
     const itemDesc = item.querySelector("description").textContent;
     const itemLink = item.querySelector("link").textContent;
-
     const doesItemExist = feedItems.findIndex(el => el.itemLink == itemLink);
 
     if (doesItemExist == -1) {
@@ -69,23 +72,38 @@ function renderHTML(feedArticles) {
     .map(feed => feed.feedTitle)
     .filter(getUniqueArrayValues);
 
-  // generate markup for the articles with a unique header per site
-  for (let i = 0; i < uniqueTitles.length; i++) {
+  // generate markup for the articles with one header per site showing the site's title
+  uniqueTitles.forEach(title => {
     let articlesPerTitle = feedArticles.filter(article => {
-      return article.feedTitle == uniqueTitles[i];
+      return article.feedTitle == title;
     });
 
     const feedMarkup = `
-      <h4> ${uniqueTitles[i]} </h4>
+    <h4>${title}</h4>
       ${generateArticleMarkup(articlesPerTitle)
         .split(",")
         .join("")}
     `;
 
     articlesPerSite.push(feedMarkup);
-  }
+  });
 
   feedElement.innerHTML = articlesPerSite.join("");
+}
+
+function showJSON() {
+  fetch(feedFile)
+    .then(validateResponse)
+    .then(readResponseAsJson)
+    .then(displayURL);
+}
+
+function displayURL(res) {
+  let feedManager = document.querySelector("#feedManager");
+
+  res.forEach(item => {
+    console.log(item.feedUrl);
+  });
 }
 
 // use the feedURL attribute for the objects in the JSON
@@ -94,8 +112,6 @@ function fetchXmlForFeeds(resourceJSON) {
   const jsonObj = JSON.parse(resourceJSON);
 
   Object.keys(jsonObj).forEach(key => {
-    // TODO: See if there is a way to not have to rely on cors-anywhere
-    // or any other third party service while testing locally
     fetch(jsonObj[key].feedUrl)
       .then(validateResponse)
       .then(readResponseAsText)
