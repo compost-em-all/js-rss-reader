@@ -1,5 +1,4 @@
 const feedItems = [];
-const feedURLs = [];
 const feedElement = document.querySelector(".feed");
 const feedFile = "app/feeds.json";
 
@@ -89,21 +88,6 @@ function renderHTML(feedArticles) {
   });
 
   feedElement.innerHTML = articlesPerSite.join("");
-}
-
-function showJSON() {
-  fetch(feedFile)
-    .then(validateResponse)
-    .then(readResponseAsJson)
-    .then(displayURL);
-}
-
-function displayURL(res) {
-  let feedManager = document.querySelector("#feedManager");
-
-  res.forEach(item => {
-    console.log(item.feedUrl);
-  });
 }
 
 // use the feedURL attribute for the objects in the JSON
