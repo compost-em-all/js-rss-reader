@@ -21,10 +21,6 @@ function readResponseAsText(res) {
   return res.text();
 }
 
-function readResponseAsJson(res) {
-  return res.json();
-}
-
 function parseFieldsFromXml(xmlDoc) {
   const parser = new DOMParser();
   const doc = parser.parseFromString(xmlDoc, "text/xml");
@@ -46,7 +42,11 @@ function parseFieldsFromXml(xmlDoc) {
     }
   });
 
-  renderHTML(feedItems);
+  const uniqueTitles = feedItems
+    .map(feed => feed.feedTitle)
+    .filter(getUniqueArrayValues);
+
+  renderHTML(feedItems, uniqueTitles);
 }
 
 function getUniqueArrayValues(value, index, self) {
@@ -58,21 +58,20 @@ function generateArticleMarkup(articles) {
   <ul>
       ${articles.map(
         article =>
-          `<li> <a href="${article.itemLink}"> ${article.itemTitle} </a> </li>`
+          `<li>
+            <a href="${article.itemLink}" target="_blank"> ${article.itemTitle}
+            </a>
+          </li>`
       )}
   </ul>
   `;
 }
 
-function renderHTML(feedArticles) {
+function renderHTML(feedArticles, titles) {
   let articlesPerSite = [];
 
-  const uniqueTitles = feedArticles
-    .map(feed => feed.feedTitle)
-    .filter(getUniqueArrayValues);
-
   // generate markup for the articles with one header per site showing the site's title
-  uniqueTitles.forEach(title => {
+  titles.forEach(title => {
     let articlesPerTitle = feedArticles.filter(article => {
       return article.feedTitle == title;
     });
